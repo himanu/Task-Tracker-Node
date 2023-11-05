@@ -6,8 +6,11 @@ const sequelize = require('./database');
 const router = require('./routes');
 
 const app = express();
-app.use(bodyParser.json()); app.use('/', (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+app.use(bodyParser.json()); 
+app.use('/', (req, res, next) => {
+    const origin = req.get('origin');
+    if (origin === 'http://localhost:3000' || origin === 'https://track-tasks-12.netlify.app')
+        res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', ['content-type', 'Authorization']);
     next();
